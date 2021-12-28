@@ -1,10 +1,10 @@
 export class Text{
     constructor(){
         this.canvas=document.createElement('canvas');
-        this.canvas.style.position='absolute';
-        this.canvas.style.left='0';
-        this.canvas.style.top='0';
-        document.body.appendChild(this.canvas);
+        // this.canvas.style.position='absolute';
+        // this.canvas.style.left='1000000';
+        // this.canvas.style.top='1000000';
+        // document.body.appendChild(this.canvas);
 
         this.ctx=this.canvas.getContext('2d');
     }
@@ -19,24 +19,24 @@ export class Text{
         const fontName='Hind';
 
         this.ctx.clearRect(0,0,stageWidth,stageHeight);
-        this.ctx.font='${fontWidth} ${fontSize}px ${fontName}';
-        this.ctx.fillStyle='rgba(0,0,0,0.3)';
-        this.ctx.textBaseline='middle';
-        const fonPos = this.ctx.measureText(myText);
+        this.ctx.font=`${fontWidth} ${fontSize}px ${fontName}`;        
+        this.ctx.fillStyle=`rgba(4,4,4,0.3)`;
+        this.ctx.textBaseline=`middle`;
+        const fontPos = this.ctx.measureText(myText);
         this.ctx.fillText(
             myText,
             (stageWidth - fontPos.width)/2,
-            fontPos.actualBoundingBoxascent +
-            fontp.actualBoundingBoxascent+
-            ((stageHeight = fontsize)/2)
+            fontPos.actualBoundingBoxAscent +
+            fontPos.actualBoundingBoxDescent+
+            ((stageHeight - fontSize)/2)
         );
 
-        return this.dotpos(density, stagewidth,stageHeight)
+        return this.dotPos(density, stageWidth,stageHeight)
 
         }
         
-        dotpos(density, stageWidth, stageHeight) {
-            const imagedata=this.ctx.getImageData(
+        dotPos(density, stageWidth, stageHeight) {
+            const imageData=this.ctx.getImageData(
                 0, 0,
                 stageWidth,stageHeight
             ).data;
@@ -45,16 +45,17 @@ export class Text{
             let i =0;
             let width=0;
             let pixel;
+
             for ( let height =0; height <stageHeight; height += density){
                 ++i;
-                const slide =(i%2)==0;
+                const slide = ( i % 2)==0;
                 width=0;
                 if(slide==1){
                     width+=6;
                 }
 
-                for (width; width <stagewidth; width += density){
-                    pixel=imagedata[((width +(height * stagewidth))*4)-1];
+                for (width; width < stageWidth; width += density){
+                    pixel=imageData[((width +(height * stageWidth))*4)-1];
                     if(pixel !=0&&
                         width>0&&
                         width <stageWidth&&

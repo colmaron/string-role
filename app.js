@@ -1,11 +1,13 @@
+
 class App{
-    constructior(){
+    constructor(){
 
         WebFont.load({
             google:{
                 families:['Hind:700']
             },
             fontactive:()=>{
+       
                 
             }
         })
